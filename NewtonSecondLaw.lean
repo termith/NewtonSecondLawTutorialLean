@@ -27,15 +27,20 @@ def velocity (t: Time) : Velocity := VelocityFromPosition 0.001 position t
 #eval velocity 1
 -/
 
-abbrev NumericalIntegration := Function -> Time -> Time -> RealNumber
 
 def range (start stop step : RealNumber)  : List RealNumber :=
   if step <= 0.0 then [] else
   let count : Nat := ((stop - start) / step).toUInt64.toNat
   List.range count |>.map (fun i => start + step * Float.ofNat i)
 
+abbrev NumericalIntegration := Function -> Time -> Time -> RealNumber
+
 def integral (dt: Time) : NumericalIntegration :=
     fun x a b =>
         range (a + dt/2) (b - dt/2) dt
         |>.map (fun t => x t * dt)
         |>.sum
+
+abbrev Antiderivative := RealNumber -> Function -> Function
+
+def antiderivative (dx : RealNumber) : Antiderivative := sorry
