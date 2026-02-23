@@ -42,5 +42,7 @@ def integral (dt: Time) : NumericalIntegration :=
         |>.sum
 
 abbrev Antiderivative := RealNumber -> Function -> Function
-
-def antiderivative (dx : RealNumber) : Antiderivative := sorry
+def antiderivative (dx : RealNumber) : Antiderivative :=
+    -- fun f0 => fun f t => f0 + integral dx f 0 t
+    -- fun f0 => fun f => fun t => f0 + integral dx f 0 t
+    fun f0 f t => f0 + integral dx f 0 t
