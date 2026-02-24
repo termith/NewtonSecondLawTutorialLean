@@ -51,4 +51,21 @@ def antiderivative (dx : RealNumber) : Antiderivative :=
     -- fun f0 => fun f => fun t => f0 + integral dx f 0 t
     fun f0 f t => f0 + integral dx f 0 t
 
-#plot (fun x => x^2)
+/-
+Example:
+x(t) = t^2
+-/
+
+def position (t: Time) : Position :=
+    - t^2
+
+def velocity (t: Time) : Velocity :=
+    VelocityFromPosition 0.001 position t
+
+def acceleration (t: Time) : Acceleration :=
+    AccelerationFromVelocity 0.001 velocity t
+
+#html plotMany #[
+    ("position", position),
+    ("velocity", velocity),
+    ("acceleration", acceleration )] (domain := (0.0, 2.0))
