@@ -1,0 +1,6 @@
+name = "NewtonSecondLawTutorial"
+
+[[require]]
+name = "LeanPlot"
+git = "https://github.com/alok/LeanPlot"
+rev = "main"
