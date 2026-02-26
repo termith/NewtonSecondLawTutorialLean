@@ -57,15 +57,35 @@ x(t) = t^2
 -/
 
 def position (t: Time) : Position :=
-    - t^2
+    t^2
 
-def velocity (t: Time) : Velocity :=
+def velocityFromTime (t: Time) : Velocity :=
     VelocityFromPosition 0.001 position t
 
-def acceleration (t: Time) : Acceleration :=
-    AccelerationFromVelocity 0.001 velocity t
+def accelerationFromTime (t: Time) : Acceleration :=
+    AccelerationFromVelocity 0.001 velocityFromTime t
 
 #html plotMany #[
     ("position", position),
+    ("velocity", velocityFromTime),
+    ("acceleration", accelerationFromTime )] (domain := (0.0, 2.0))
+
+def mass : RealNumber := 90.0
+def force : RealNumber := 882.0
+
+def acceleration (t: Time) : Acceleration :=
+    mass / force
+
+abbrev VelocityFromAcceleration : Time -> Antiderivative := antiderivative
+abbrev PositionFromVelocity  : Time -> Antiderivative := antiderivative
+
+def velocity (t: Time) : Velocity :=
+    VelocityFromAcceleration 0.001 0 acceleration t
+
+def position' (t: Time) : Position :=
+    PositionFromVelocity 0.001 0 velocity t
+
+#html plotMany #[
+    ("position", position'),
     ("velocity", velocity),
     ("acceleration", acceleration )] (domain := (0.0, 2.0))
